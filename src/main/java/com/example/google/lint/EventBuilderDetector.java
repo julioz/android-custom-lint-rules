@@ -25,6 +25,7 @@ public class EventBuilderDetector extends Detector implements Detector.JavaScann
                     EventBuilderDetector.class,
                     Scope.JAVA_FILE_SCOPE));
 
+    public static final boolean PRINT_LOGS = false;
     public static final String APPLICABLE_METHOD_NAME = "post";
 
     /** Constructs a new {@link EventBuilderDetector} check */
@@ -91,6 +92,8 @@ public class EventBuilderDetector extends Detector implements Detector.JavaScann
     }
 
     private void log(String s) {
-        System.out.println(s);
+        if (PRINT_LOGS) {
+            System.out.println(s);
+        }
     }
 }
