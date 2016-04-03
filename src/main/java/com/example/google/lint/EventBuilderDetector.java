@@ -27,6 +27,8 @@ public class EventBuilderDetector extends Detector implements Detector.JavaScann
 
     public static final boolean PRINT_LOGS = false;
     public static final String APPLICABLE_METHOD_NAME = "post";
+    public static final String EVENT_BUILDER_TYPE_NAME = "EventBuilder";
+    public static final String BUILD_METHOD_NAME = "build";
 
     /** Constructs a new {@link EventBuilderDetector} check */
     public EventBuilderDetector() {
@@ -64,7 +66,7 @@ public class EventBuilderDetector extends Detector implements Detector.JavaScann
             if (argument instanceof ConstructorInvocation) {
                 ConstructorInvocation invocation = (ConstructorInvocation) argument;
                 String constructorRawType = invocation.rawTypeReference().toString();
-                if (constructorRawType.equals("EventBuilder")) {
+                if (constructorRawType.equals(EVENT_BUILDER_TYPE_NAME)) {
                     shouldReport = true;
                 }
             } else if (argument instanceof MethodInvocation) {
@@ -74,8 +76,8 @@ public class EventBuilderDetector extends Detector implements Detector.JavaScann
                 log("invocation = " + invocation);
                 log("operand = " + invocation.rawOperand());
                 log("name = " + methodIdentifier);
-                if (operand.toString().contains("EventBuilder")) {
-                    if (!methodIdentifier.toString().equals("build")) {
+                if (operand.toString().contains(EVENT_BUILDER_TYPE_NAME)) {
+                    if (!methodIdentifier.toString().equals(BUILD_METHOD_NAME)) {
                         shouldReport = true;
                     }
                 }
